@@ -2,9 +2,6 @@
 This is a tool that runs on `localhost` that can display where you should be.
 
 # Installation
-## Prerequisites
-- Python 3.6+
-
 ## Download
 Either
 1. Download ZIP and decompress; or
@@ -12,6 +9,12 @@ Either
 ```sh
 git clone https://github.com/HanwenZhu/newtab.git
 cd newtab
+```
+
+## Prerequisites
+- Python 3.6+
+- Execute the following:
+```sh
 python3 -m pip install -r requirements.txt
 ```
 
