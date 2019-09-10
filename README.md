@@ -20,5 +20,6 @@ Run
 ```sh
 python3 run.py
 ```
+and go to [`http://localhost:5050`](http://localhost:5050) in the browser.
 
 The `app` is located at `newtab:app`.
