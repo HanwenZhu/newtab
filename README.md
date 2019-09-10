@@ -11,14 +11,14 @@ git clone https://github.com/HanwenZhu/newtab.git
 cd newtab
 ```
 
-## Prerequisites
+## Install Prerequisites
 - Python 3.6+
-- Execute the following:
+- Run the following line:
 ```sh
 python3 -m pip install -r requirements.txt
 ```
 
-## Run
+# Basic Usage
 Run
 ```sh
 python3 run.py
