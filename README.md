@@ -2,7 +2,7 @@
 This is a tool that runs on `localhost` that can display where you should be.
 
 # Installation
-## Prerequisites:
+## Prerequisites
 - Python 3.6+
 
 ## Download
