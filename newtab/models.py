@@ -1,5 +1,6 @@
 import bisect
 import datetime
+import time
 
 import requests
 
@@ -129,7 +130,7 @@ class Now:
     ]
 
     def __init__(self):
-        now = datetime.datetime.now()
+        now = self.now()
         self.today = self.DATE_TO_DAY[now.date()]
         self.mdHMS = now.strftime('%m%d%H%M%S')
         self.day = self.WEEKDAYS[now.weekday()]
@@ -158,6 +159,10 @@ class Now:
         else:
             self.room = ''
             self.activity = self.today
+
+    @staticmethod
+    def now(tz=datetime.timezone(datetime.timedelta(hours=8))):
+        return datetime.datetime.now(tz=tz)
 
     def status(self):
         return {
@@ -201,7 +206,7 @@ class Login:
         return ''.join(output)
 
     def login(self, username, password):
-        rc4key = str(int(datetime.datetime.now().timestamp() * 1000))
+        rc4key = str(int(time.time() * 1000))
         pwd = self.do_encrypt_rc4(password, rc4key)
         params = {
             'opr': 'pwdLogin',
