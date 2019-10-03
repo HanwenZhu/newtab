@@ -72,3 +72,22 @@ span#time-time {
     left: 10px;
     bottom: 0px;
 }
+
+video.transform {
+    height: auto;
+    display: none;
+}
+
+span#time-date > span.digit > video.transform {
+    width: 18px;
+    margin-bottom: -2px;
+}
+
+span#time-time > span.digit > video.transform {
+    width: 36px;
+    margin-bottom: -3px;
+}
+
+div.number {
+    display: inline;
+}

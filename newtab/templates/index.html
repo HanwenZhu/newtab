@@ -9,8 +9,15 @@
 </head>
 <body>
   <div id="time">
-    <span id="time-date" class="big-text"><span id="m1" class="digit"></span><span id="m2" class="digit"></span>/<span id="d1" class="digit"></span><span id="d2" class="digit"></span> <span id="time-day"></span></span>
-    <span id="time-time" class="enormous-text"><span id="H1" class="digit"></span><span id="H2" class="digit"></span>:<span id="M1" class="digit"></span><span id="M2" class="digit"></span>:<span id="S1" class="digit"></span><span id="S2" class="digit"></span></span>
+    {% macro digit(id) -%}
+      <span id="{{ id }}" class="digit"><div class="number"></div><video class="transform" muted playsinline></video></span>
+    {%- endmacro -%}
+    <span id="time-date" class="big-text">
+      {{ digit('m1') }}{{ digit('m2') }}/{{ digit('d1') }}{{ digit('d2') }} <span id="time-day"></span>
+    </span>
+    <span id="time-time" class="enormous-text">
+      {{ digit('H1') }}{{ digit('H2') }}:{{ digit('M1') }}{{ digit('M2') }}:{{ digit('S1') }}{{ digit('S2') }}
+    </span>
   </div>
   <div id="status">
     <span id="status-room" class="big-text"></span>
