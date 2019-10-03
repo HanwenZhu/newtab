@@ -1,3 +1,5 @@
+// TODO, jQuery is slow
+
 var interval;
 
 
@@ -66,6 +68,7 @@ function manimTransform($element, target) {
         $number.html(target);
     }
 
+    // TODO, in Safari the letters (including time-day) seem to thicken when video is playing
     if (webm || quicktime) {
         $transform[0].load();
         $transform.one('canplay', () => {
