@@ -1,6 +1,7 @@
 // TODO, jQuery is slow
 // TODO, cache all the videos.  The videos take 2 to 3 times to go through and
 // will be a major drawback if this thing were to go beyond localhost
+// TODO, video is not clear.  Consider doubling width & height?
 
 var interval;
 
