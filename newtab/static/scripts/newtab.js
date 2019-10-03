@@ -1,4 +1,6 @@
 // TODO, jQuery is slow
+// TODO, cache all the videos.  The videos take 2 to 3 times to go through and
+// will be a major drawback if this thing were to go beyond localhost
 
 var interval;
 
@@ -68,7 +70,7 @@ function manimTransform($element, target) {
         $number.html(target);
     }
 
-    // TODO, in Safari the letters (including time-day) seem to thicken when video is playing
+    // TODO, in some specific version of WebKit all words seem to thicken when video is playing
     if (webm || quicktime) {
         $transform[0].load();
         $transform.one('canplay', () => {
