@@ -1,15 +1,49 @@
 // TODO, jQuery is slow
-// TODO, cache all the videos.  The videos take 2 to 3 times to go through and
-// will be a major drawback if this thing were to go beyond localhost
 // TODO, video is not clear.  Consider doubling width & height?
+// TODO, support other browsers?
 
 var interval;
+
+
+function fetchCachedVideo(filename, callback) {
+    // As was discussed, the best practice is to cache individual videos.
+    // There is the alternative of having a long video cached and jumping to
+    // individual timestamps, but it is not efficient for this task since
+    // 01, 12, ..., 90 are used predominantly.
+
+    // Safari doesn't cache by default!
+    if (navigator.vendor !== "Apple Computer, Inc.") {
+        setTimeout(() => callback(`/static/videos/${filename}`), 0);
+        return;
+    }
+
+    var dataURL = localStorage.getItem(filename);
+    if (dataURL) {
+        setTimeout(() => callback(dataURL), 0);
+    } else {
+        $.ajax(`/static/videos/${filename}`, {
+            method: 'GET',
+            cache: true,
+            xhrFields: {
+                responseType: 'blob'
+            }
+        }).done(response => {
+            var fileReader = new FileReader();
+            fileReader.onloadend = () => {
+                dataURL = fileReader.result;
+                localStorage.setItem(filename, dataURL);
+                callback(dataURL);
+            };
+            fileReader.readAsDataURL(response);
+        });
+    }
+}
 
 
 function setup() {
     // Disable cache
     $.ajaxSetup({cache: false});
-    $.getJSON('/status', response => {
+    $.getJSON('/status').done(response => {
         $('#time-today').html(response.today);
         $('#m1 > .number').html(response.mdHMS.charAt(0));
         $('#m2 > .number').html(response.mdHMS.charAt(1));
@@ -29,7 +63,7 @@ function setup() {
 
 
 function updateStatus() {
-    $.getJSON('/status', response => {
+    $.getJSON('/status').done(response => {
         $('#time-today').html(response.today);
         manimTransform($('#m1'), response.mdHMS.charAt(0));
         manimTransform($('#m2'), response.mdHMS.charAt(1));
@@ -51,6 +85,7 @@ function updateStatus() {
 function manimTransform($element, target) {
     var $number = $element.find('.number');
     var $transform = $element.find('video.transform');
+
     if ($number.text() === target) {
         return;
     }
@@ -63,15 +98,14 @@ function manimTransform($element, target) {
     // Chrome does support WebM.  It (reasonably) doesn't support *.mov.
     var webm = $transform[0].canPlayType('video/webm');
     var quicktime = $transform[0].canPlayType('video/quicktime');
-    if (webm) {
-        $transform.attr('src', `/static/videos/${$number.text()}${target}.webm`);
-    } else if (quicktime) {
-        $transform.attr('src', `/static/videos/${$number.text()}${target}.mov`);
-    } else {
+
+    if (!webm && !quicktime) {
         $number.html(target);
+        return;
     }
 
-    if (webm || quicktime) {
+    fetchCachedVideo(`${$number.text()}${target}` + (webm ? '.webm' : '.mov'), dataURL => {
+        $transform.attr('src', dataURL);
         $transform[0].load();
         $transform.one('canplay', () => {
             $transform[0].play().then(() => {
@@ -82,7 +116,7 @@ function manimTransform($element, target) {
             $number.show();
             $transform.hide();
         });
-    }
+    });
 }
 
 

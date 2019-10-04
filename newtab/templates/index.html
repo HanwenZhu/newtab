@@ -10,7 +10,7 @@
 <body>
   <div id="time">
     {% macro digit(id) -%}
-      <span id="{{ id }}" class="digit"><div class="number"></div><video class="transform" muted playsinline></video></span>
+      <span id="{{ id }}" class="digit"><div class="number"></div><video class="transform" muted playsinline disablepictureinpicture></video></span>
     {%- endmacro -%}
     <span id="time-date" class="big-text">
       {{ digit('m1') }}{{ digit('m2') }}/{{ digit('d1') }}{{ digit('d2') }} <span id="time-day"></span>
