@@ -99,7 +99,7 @@ $(document).ready(() => {
 });
 
 
-function stop() {
+function stopInterval() {
     // For debug only
     clearInterval(interval);
 }
