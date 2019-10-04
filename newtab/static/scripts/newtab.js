@@ -71,18 +71,16 @@ function manimTransform($element, target) {
         $number.html(target);
     }
 
-    // TODO, in some specific version of WebKit all words seem to thicken when video is playing
     if (webm || quicktime) {
         $transform[0].load();
         $transform.one('canplay', () => {
             $transform[0].play().then(() => {
                 $transform.show();
-                $number.hide();
-                $number.html(target);
+                $number.hide().html(target);
             });
         }).one('ended', () => {
-            $transform.hide();
             $number.show();
+            $transform.hide();
         });
     }
 }
