@@ -26,6 +26,9 @@ body {
 span {
     position: absolute;
     font-family: CMU, sans-serif;
+    color: black;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
 }
 
 span.normal-text {
