@@ -12,7 +12,7 @@ function fetchCachedVideo(filename, callback) {
     // 01, 12, ..., 90 are used predominantly.
 
     // Safari doesn't cache by default!
-    if (navigator.vendor !== "Apple Computer, Inc.") {
+    if (navigator.vendor !== 'Apple Computer, Inc.') {
         setTimeout(() => callback(`/static/videos/${filename}`), 0);
         return;
     }
