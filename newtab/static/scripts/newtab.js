@@ -12,7 +12,8 @@ function fetchCachedVideo(filename, callback) {
     // 01, 12, ..., 90 are used predominantly.
 
     // Safari doesn't cache by default!
-    if (navigator.vendor !== 'Apple Computer, Inc.') {
+    // Actually, using base64 is slower on locally hosted pages.
+    if (navigator.vendor !== 'Apple Computer, Inc.' || ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname)) {
         setTimeout(() => callback(`/static/videos/${filename}`), 0);
         return;
     }
@@ -109,12 +110,16 @@ function manimTransform($element, target) {
         $transform[0].load();
         $transform.one('canplay', () => {
             $transform[0].play().then(() => {
-                $transform.show();
-                $number.hide().html(target);
+                $transform.show(0, () => {
+                    $number.hide(0, () => {
+                        $number.html(target);
+                    });
+                });
             });
         }).one('ended', () => {
-            $number.show();
-            $transform.hide();
+            $number.show(0, () => {
+                $transform.hide(0);
+            });
         });
     });
 }
