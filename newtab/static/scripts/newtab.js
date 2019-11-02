@@ -4,7 +4,8 @@
 
 var interval;
 
-var $time_today, $time_day, $status_room, $status_activity, $mdHMS;
+// To avoid DOM lookup
+var $timeToday, $timeDay, $statusRoom, $statusActivity, $mdHMS;
 
 // We need videos with an alpha channel for transparency.
 // I found that *.mov and *.webm work.
@@ -15,41 +16,28 @@ var $time_today, $time_day, $status_room, $status_activity, $mdHMS;
 var videoElement = $('<video></video>')[0];
 var webm = videoElement.canPlayType('video/webm');
 var quicktime = videoElement.canPlayType('video/quicktime');
+var extension = webm ? '.webm' : quicktime ? '.mov' : null;
+
+var videoPool = new Array(10).fill(null).map(item => new Array(10).fill(null));
 
 
-function fetchCachedVideo(filename, callback) {
+function fetchVideo(from, to, callback) {
     // As was discussed, the best practice is to cache individual videos.
+    // This will be implemented by appending new videos into an array.
     // There is the alternative of having a long video cached and jumping to
     // individual timestamps, but it is not efficient for this task since
     // 01, 12, ..., 90 are used predominantly.
 
-    // Safari doesn't cache by default!
-    // Actually, using base64 is slower on locally hosted pages.
-    if (navigator.vendor !== 'Apple Computer, Inc.' || ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname)) {
-        setTimeout(() => callback(`/static/videos/${filename}`), 0);
-        return;
+    if (videoPool[from][to] !== null) {
+        return videoPool[from][to];
     }
 
-    var dataURL = localStorage.getItem(filename);
-    if (dataURL) {
-        setTimeout(() => callback(dataURL), 0);
-    } else {
-        $.ajax(`/static/videos/${filename}`, {
-            method: 'GET',
-            cache: true,
-            xhrFields: {
-                responseType: 'blob'
-            }
-        }).done(response => {
-            var fileReader = new FileReader();
-            fileReader.onloadend = () => {
-                dataURL = fileReader.result;
-                localStorage.setItem(filename, dataURL);
-                callback(dataURL);
-            };
-            fileReader.readAsDataURL(response);
-        });
-    }
+    var $video = $('<video class="transform" src="/static/videos/' +
+                   `${from}${to}${extension}" preload="auto" muted ` +
+                   'playsinline disablepictureinpicture>');
+    $video[0].load();
+    videoPool[from][to] = $video;
+    return $video;
 }
 
 
@@ -57,18 +45,18 @@ function setup() {
     // Disable cache
     $.ajaxSetup({cache: false});
 
-    $time_today = $('#time-today');
-    $time_day = $('#time-day');
-    $status_room = $('#status-room');
-    $status_activity = $('#status-activity');
-    $mdHMS = $('.mdHMS')
+    $timeToday = $('#time-today');
+    $timeDay = $('#time-day');
+    $statusRoom = $('#status-room');
+    $statusActivity = $('#status-activity');
+    $mdHMS = $('.mdHMS');
     $.getJSON('/status').done(response => {
-        $time_today.html(response.today);
-        $time_day.html(response.day);
-        $status_room.html(response.room);
-        $status_activity.html(response.activity);
+        $timeToday.html(response.today);
+        $timeDay.html(response.day);
+        $statusRoom.html(response.room);
+        $statusActivity.html(response.activity);
         $mdHMS.each((index, digit) => {
-            $(digit).find('.number').html(response.mdHMS.charAt(index));
+            $(digit).html(response.mdHMS.charAt(index));
         });
     });
 }
@@ -76,10 +64,10 @@ function setup() {
 
 function updateStatus() {
     $.getJSON('/status').done(response => {
-        $time_today.html(response.today);
-        $time_day.html(response.day);
-        $status_room.html(response.room);
-        $status_activity.html(response.activity);
+        $timeToday.html(response.today);
+        $timeDay.html(response.day);
+        $statusRoom.html(response.room);
+        $statusActivity.html(response.activity);
         $mdHMS.each((index, digit) => {
             manimTransform($(digit), response.mdHMS.charAt(index));
         });
@@ -88,34 +76,20 @@ function updateStatus() {
 
 
 function manimTransform($element, target) {
-    var $number = $element.find('.number');
-    var $transform = $element.find('video.transform');
-
-    if ($number.html() === target) {
+    if ($element.html() === target) {
         return;
     }
 
     if (!webm && !quicktime) {
-        $number.html(target);
+        $element.html(target);
         return;
     }
 
-    fetchCachedVideo(`${$number.text()}${target}` + (webm ? '.webm' : '.mov'), dataURL => {
-        $transform.attr('src', dataURL);
-        $transform[0].load();
-        $transform.one('canplay', () => {
-            $transform[0].play().then(() => {
-                $transform.show(0, () => {
-                    $number.hide(0, () => {
-                        $number.html(target);
-                    });
-                });
-            });
-        }).one('ended', () => {
-            $number.show(0, () => {
-                $transform.hide(0);
-            });
-        });
+    var $video = fetchVideo(parseInt($element.html()), parseInt(target));
+    $video.one('ended', () => {
+        $element.html(target);
+    })[0].play().then(() => {
+        $element.html($video);
     });
 }
 

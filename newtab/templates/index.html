@@ -10,9 +10,8 @@
 <body>
   <div id="time">
     {% macro digit() -%}
-      <span id="{{ id }}" class="mdHMS"><div class="number"></div><video class="transform" muted playsinline disablepictureinpicture></video></span>
+      <span id="{{ id }}" class="mdHMS"></span>
     {%- endmacro -%}
-    <div id="video-pool"></div>
     <span id="time-date" class="big-text">
       {{ digit() }}{{ digit() }}/{{ digit() }}{{ digit() }} <span id="time-day"></span>
     </span>

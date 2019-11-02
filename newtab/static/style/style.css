@@ -49,6 +49,7 @@ span.enormous-text {
 
 span.mdHMS {
     position: relative;
+    display: inline;
 }
 
 span#status-room {
@@ -77,23 +78,14 @@ span#time-time {
 
 video.transform {
     height: auto;
-    display: none;
 }
 
-span#time-date > span.digit > video.transform {
+span#time-date > span.mdHMS > video.transform {
     width: 18px;
     margin-bottom: -2px;
 }
 
-span#time-time > span.digit > video.transform {
+span#time-time > span.mdHMS > video.transform {
     width: 36px;
     margin-bottom: -3px;
-}
-
-div.number {
-    display: inline;
-}
-
-div#video-pool {
-    display: none;
 }
