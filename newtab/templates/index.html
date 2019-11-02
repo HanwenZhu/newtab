@@ -9,14 +9,15 @@
 </head>
 <body>
   <div id="time">
-    {% macro digit(id) -%}
-      <span id="{{ id }}" class="digit"><div class="number"></div><video class="transform" muted playsinline disablepictureinpicture></video></span>
+    {% macro digit() -%}
+      <span id="{{ id }}" class="mdHMS"><div class="number"></div><video class="transform" muted playsinline disablepictureinpicture></video></span>
     {%- endmacro -%}
+    <div id="video-pool"></div>
     <span id="time-date" class="big-text">
-      {{ digit('m1') }}{{ digit('m2') }}/{{ digit('d1') }}{{ digit('d2') }} <span id="time-day"></span>
+      {{ digit() }}{{ digit() }}/{{ digit() }}{{ digit() }} <span id="time-day"></span>
     </span>
     <span id="time-time" class="enormous-text">
-      {{ digit('H1') }}{{ digit('H2') }}:{{ digit('M1') }}{{ digit('M2') }}:{{ digit('S1') }}{{ digit('S2') }}
+      {{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}
     </span>
   </div>
   <div id="status">
