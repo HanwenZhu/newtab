@@ -2,6 +2,9 @@ import os
 
 from flask import Flask
 
+import newtab.clock
+import newtab.wifi
+
 
 app = Flask(__name__, instance_relative_config=True)
 
