@@ -56,7 +56,9 @@ function setup() {
         $statusRoom.html(response.room);
         $statusActivity.html(response.activity);
         $mdHMS.each((index, digit) => {
-            $(digit).html(response.mdHMS.charAt(index));
+            number = parseInt(response.mdHMS.charAt(index));
+            $(digit).html(number);
+            digit.number = number;
         });
     });
 }
@@ -76,20 +78,23 @@ function updateStatus() {
 
 
 function manimTransform($element, target) {
-    if ($element.html() === target) {
+    target = parseInt(target);
+    if ($element[0].number === target) {
         return;
     }
 
     if (!webm && !quicktime) {
+        $element[0].number = target;
         $element.html(target);
         return;
     }
 
-    var $video = fetchVideo(parseInt($element.html()), parseInt(target));
+    var $video = fetchVideo($element[0].number, target);
     $video.one('ended', () => {
         $element.html(target);
     })[0].play().then(() => {
         $element.html($video);
+        $element[0].number = target;
     });
 }
 
