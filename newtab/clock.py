@@ -126,6 +126,7 @@ FRIDAY_SCHEDULE = [
     (datetime.time(14, 5), datetime.time(15, 0)),
 ]
 
+
 def status():
     now = datetime.datetime.now(tz=TIMEZONE)
     today = DATE_TO_DAY[now.date()]
@@ -147,8 +148,8 @@ def status():
             room, activity = CLASSES[class_index]
             class_time = schedule[next_end]
             activity = (f'{class_time[0].strftime("%H:%M")}&ndash;'
-                             f'{class_time[1].strftime("%H:%M")} '
-                             f'{activity}')
+                        f'{class_time[1].strftime("%H:%M")} '
+                        f'{activity}')
             next_start = bisect.bisect(start_times, now.time())
             if next_start == next_end:
                 activity = f'Next up: {activity}'
