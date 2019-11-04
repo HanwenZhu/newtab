@@ -8,7 +8,12 @@
   <title>Home</title>
 </head>
 <body>
-  <div id="time">
+
+  <header>
+    <span id="weather" class="normal-text"></span>
+  </header>
+
+  <footer>
     {% macro digit() -%}
       <span class="mdHMS"></span>
     {%- endmacro -%}
@@ -18,10 +23,9 @@
     <span id="time-time" class="enormous-text">
       {{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}
     </span>
-  </div>
-  <div id="status">
-    <span id="status-room" class="big-text"></span>
-    <span id="status-activity" class="normal-text"></span>
-  </div>
+    <span id="location-room" class="big-text"></span>
+    <span id="location-activity" class="normal-text"></span>
+  </footer>
+
 </body>
 </html>

@@ -8,6 +8,11 @@ def index():
     return render_template('index.html')
 
 
-@newtab.app.route('/status')
-def status():
+@newtab.app.route('/clock')
+def clock():
     return jsonify(newtab.clock.status())
+
+
+@newtab.app.route('/weather')
+def weather():
+    return jsonify(newtab.weather.status())

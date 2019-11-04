@@ -52,16 +52,6 @@ span.mdHMS {
     display: inline;
 }
 
-span#status-room {
-    right: 15px;
-    bottom: 42px;
-}
-
-span#status-activity {
-    right: 15px;
-    bottom: 12px;
-}
-
 span#time-date {
     left: 15px;
     bottom: 80px;
@@ -74,4 +64,19 @@ span#time-day {
 span#time-time {
     left: 10px;
     bottom: 0;
+}
+
+span#location-room {
+    right: 15px;
+    bottom: 42px;
+}
+
+span#location-activity {
+    right: 15px;
+    bottom: 12px;
+}
+
+span#weather {
+    right: 15px;
+    top: 12px;
 }

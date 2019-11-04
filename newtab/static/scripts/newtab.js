@@ -1,9 +1,11 @@
 // TODO, jQuery is slow
 
 var interval;
+var tick = 0;
 
 // To avoid DOM lookup
-var $timeToday, $timeDay, $statusRoom, $statusActivity, $mdHMS;
+var $timeToday, $timeDay, $locationRoom, $locationActivity, $mdHMS,
+    $weather;
 
 
 function setup() {
@@ -12,20 +14,22 @@ function setup() {
 
     $timeToday = $('#time-today');
     $timeDay = $('#time-day');
-    $statusRoom = $('#status-room');
-    $statusActivity = $('#status-activity');
+    $locationRoom = $('#location-room');
+    $locationActivity = $('#location-activity');
     $mdHMS = $('.mdHMS');
+
+    $weather = $('#weather');
 
     update();
 }
 
 
-function updateStatus() {
-    $.getJSON('/status').done(response => {
+function updateClock() {
+    $.getJSON('/clock').done(response => {
         $timeToday.html(response.today);
         $timeDay.html(response.day);
-        $statusRoom.html(response.room);
-        $statusActivity.html(response.activity);
+        $locationRoom.html(response.room);
+        $locationActivity.html(response.activity);
         $mdHMS.each((index, digit) => {
             digit.innerHTML = response.mdHMS.charAt(index);
         });
@@ -33,8 +37,21 @@ function updateStatus() {
 }
 
 
+function updateWeather() {
+    $.getJSON('/weather').done(response => {
+        $weather.html(response);
+    });
+}
+
+
 function update() {
-    updateStatus();
+    if (tick % 1 == 0) {
+        updateClock();
+    }
+    if (tick % 1800 == 0) {
+        updateWeather();
+    }
+    tick++;
 }
 
 

@@ -3,6 +3,7 @@ import os
 from flask import Flask
 
 import newtab.clock
+import newtab.weather
 import newtab.wifi
 
 
