@@ -1,0 +1,317 @@
+@keyframes turn-240 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(240deg);
+    }
+}
+
+@keyframes turn-360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.reactor-container {
+    /* display: none; */
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.abs-center {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.core {
+    border: 1px solid #889ebb;
+    background-color: white;
+}
+
+.core-1 {
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 0 5px 4px hsl(198, 100%, 98%), 0 0 10px 5px hsl(198, 100%, 99%) inset;
+}
+
+.core-2 {
+    width: 55px;
+    height: 55px;
+    box-shadow: 0 0 5px 4px hsl(198, 100%, 97%), 0 0 10px 5px hsl(198, 100%, 98%) inset;
+}
+
+.core-3 {
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 0 5px 4px hsl(198, 100%, 95%), 0 0 10px 5px hsl(198, 100%, 97%) inset;
+}
+
+.core-4 {
+    width: 85px;
+    height: 85px;
+    box-shadow: 0 0 13px 20px hsl(198, 100%, 93%), 0 0 10px 5px hsl(198, 100%, 95%) inset;
+}
+
+.lattice {
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+    border: 20px solid hsl(198, 100%, 8%);
+    background-color: transparent;
+    box-shadow: 0 0 10px 20px hsl(198, 100%, 89%);
+    animation: turn-240 2s cubic-bezier(0.75, 0, 0.75, 0.9) reverse;
+    /*animation: turn-240 2s ease;*/
+}
+
+.lattice-hole {
+    position: absolute;
+    width: 8px;
+    height: 16px;
+    top: calc(50% - 68px);
+    left: calc(50% - 4px);
+    transform-origin: 4px 68px;
+    background-color: hsl(198, 100%, 93%);
+    border-radius: 5px;
+    box-shadow: 0px 5px 5px 1px hsl(198, 100%, 91%) inset;
+}
+
+.lattice-hole-1 {
+    transform: rotate(18.5deg);
+}
+
+.lattice-hole-2 {
+    transform: rotate(30.5deg);
+}
+
+.lattice-hole-3 {
+    transform: rotate(42.5deg);
+}
+
+.lattice-hole-4 {
+    transform: rotate(54.5deg);
+}
+
+.lattice-hole-5 {
+    transform: rotate(66.5deg);
+}
+
+.lattice-hole-6 {
+    transform: rotate(78.5deg);
+}
+
+.lattice-hole-7 {
+    transform: rotate(90.5deg);
+}
+
+.lattice-hole-8 {
+    transform: rotate(102.5deg);
+}
+
+.lattice-hole-9 {
+    transform: rotate(138.5deg);
+}
+
+.lattice-hole-10 {
+    transform: rotate(150.5deg);
+}
+
+.lattice-hole-11 {
+    transform: rotate(162.5deg);
+}
+
+.lattice-hole-12 {
+    transform: rotate(174.5deg);
+}
+
+.lattice-hole-13 {
+    transform: rotate(186.5deg);
+}
+
+.lattice-hole-14 {
+    transform: rotate(198.5deg);
+}
+
+.lattice-hole-15 {
+    transform: rotate(210.5deg);
+}
+
+.lattice-hole-16 {
+    transform: rotate(222.5deg);
+}
+
+.lattice-hole-17 {
+    transform: rotate(258.5deg);
+}
+
+.lattice-hole-18 {
+    transform: rotate(270.5deg);
+}
+
+.lattice-hole-19 {
+    transform: rotate(282.5deg);
+}
+
+.lattice-hole-20 {
+    transform: rotate(294.5deg);
+}
+
+.lattice-hole-21 {
+    transform: rotate(306.5deg);
+}
+
+.lattice-hole-22 {
+    transform: rotate(318.5deg);
+}
+
+.lattice-hole-23 {
+    transform: rotate(330.5deg);
+}
+
+.lattice-hole-24 {
+    transform: rotate(342.5deg);
+}
+
+.coil-container {
+    width: 220px;
+    height: 220px;
+    z-index: 2;
+    box-shadow: 0 0 5px 5px grey, 0 0 13px 20px hsl(198, 100%, 77%) inset;
+    animation: turn-360 2s ease;
+}
+
+.coil-rail {
+    width: 217px;
+    height: 217px;
+    z-index: 1;
+    border: 3px solid hsl(198, 100%, 8%);
+    background-color: transparent;
+}
+
+.coil {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    top: calc(50% - 110px);
+    left: calc(50% - 15px);
+    transform-origin: 15px 110px;
+}
+
+.wires {
+    position: absolute;
+    width: 30px;
+    height: 29px;
+    background: linear-gradient(to bottom, hsl(29, 100%, 27%) 0px, hsl(29, 100%, 47%) 6px, hsl(29, 100%, 52%) 8px, hsl(29, 100%, 47%) 10px, hsl(29, 100%, 47%) 23px, hsl(29, 100%, 27%)) 29px;
+    border-radius: 6px;
+}
+
+.wires-overlay {
+    position: absolute;
+    width: 30px;
+    height: 29px;
+    filter: brightness(0.8);
+    background: repeating-linear-gradient(90deg, hsla(29, 100%, 60%, 0.7) 0px, hsla(29, 100%, 40%, 0.5) 1.5px, hsla(29, 100%, 60%, 0.3) 3px);
+    border-radius: 6px;
+}
+
+.bar-left {
+    position: absolute;
+    top: 1px;
+    left: -1px;
+    width: 0px;
+    height: 42px;
+    border-left: 2px solid hsl(198, 100%, 8%);
+    border-right: 2px solid hsl(198, 100%, 8%);
+    background-color: hsl(198, 100%, 8%);
+    border-radius: 1px;
+}
+
+.bar-right {
+    position: absolute;
+    top: 1px;
+    right: -1px;
+    width: 0px;
+    height: 42px;
+    border-left: 2px solid hsl(198, 100%, 8%);
+    border-right: 2px solid hsl(198, 100%, 8%);
+    background-color: hsl(198, 100%, 8%);
+    border-radius: 1px;
+}
+
+.bar-mid {
+    position: absolute;
+    width: 100%;
+    top: 28px;
+    background-color: hsl(198, 100%, 8%);
+    border-top: 2px solid hsl(198, 100%, 8%);
+    border-bottom: 2px solid hsl(198, 100%, 8%);
+}
+
+.coil-1 {
+    transform: rotate(18deg);
+}
+
+.coil-2 {
+    transform: rotate(54deg);
+}
+
+.coil-3 {
+    transform: rotate(90deg);
+}
+
+.coil-4 {
+    transform: rotate(126deg);
+}
+
+.coil-5 {
+    transform: rotate(162deg);
+}
+
+.coil-6 {
+    transform: rotate(198deg);
+}
+
+.coil-7 {
+    transform: rotate(234deg);
+}
+
+.coil-8 {
+    transform: rotate(270deg);
+}
+
+.coil-9 {
+    transform: rotate(306deg);
+}
+
+.coil-10 {
+    transform: rotate(342deg);
+}
+
+.outer-plate {
+    width: 220px;
+    height: 220px;
+    z-index: -1;
+    border: 20px solid hsl(216, 5%, 60%);
+}
+
+.outer-dent {
+    width: 255px;
+    height: 255px;
+    z-index: 1;
+    box-shadow: 0 0 2px 3px hsl(216, 5%, 70%), 0 0 5px 1px #8c8c8c inset;
+}
+
+.lighting {
+    width: 260px;
+    height: 260px;
+    box-shadow: 0 0 100px 100px hsl(198, 100%, 96%);
+}
