@@ -10,7 +10,7 @@ TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
 
 # Holidays
 HOLIDAYS = {
-    datetime.date(2019, 9, 13): 'Mid-Autumn Festival',
+    datetime.date(2019, 9, 13): 'Mid-autumn Festival',
     datetime.date(2019, 9, 28): 'National Holiday',
     datetime.date(2019, 9, 29): 'National Holiday',
     datetime.date(2019, 9, 30): 'National Holiday',
@@ -55,15 +55,15 @@ HOLIDAYS = {
 
 # Special events other than holidays
 EVENTS = {
-    datetime.date(2019, 11, 14): 'Parent-Teacher Conference',
-    datetime.date(2019, 11, 15): 'Parent-Teacher Conference',
+    datetime.date(2019, 11, 14): 'Parent&ndash;Teacher Conference',
+    datetime.date(2019, 11, 15): 'Parent&ndash;Teacher Conference',
     datetime.date(2019, 11, 22): 'Wierd Staff Day',
 }
 
 DATE_TO_DAY = {}
 _last_school_day = -1
 for _date_ordinal in range(datetime.date(2019, 8, 26).toordinal(),
-                          datetime.date(2020, 6, 19).toordinal()):
+                           datetime.date(2020, 6, 19).toordinal()):
     _date = datetime.date.fromordinal(_date_ordinal)
     _special = HOLIDAYS.get(_date, '') or EVENTS.get(_date, '')
     if _special:
