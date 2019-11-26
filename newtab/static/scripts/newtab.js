@@ -1,7 +1,12 @@
 // TODO, jQuery is slow
 
 var interval;
+
+// For short-period checks
 var tick = 0;
+
+// For long-period checks
+var lastWeatherCheck = 0;
 
 // To avoid DOM lookup
 var $timeToday, $timeDay, $locationRoom, $locationActivity, $mdHMS,
@@ -48,10 +53,13 @@ function update() {
     if (tick % 1 == 0) {
         updateClock();
     }
-    if (tick % 1800 == 0) {
-        updateWeather();
-    }
     tick++;
+
+    var now = Date.now();
+    if (now - lastWeatherCheck > 1800000) {
+        updateWeather();
+        lastWeatherCheck = now;
+    }
 }
 
 
