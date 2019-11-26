@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="utf-8">
+
+  <link rel="preload" href="/static/fonts/cmunrm.otf" as="font" type="font/otf" crossorigin>
+
   <link rel="stylesheet" href="/static/style/style.css">
+  <link rel="stylesheet" href="/static/style/weather.css">
+  <link rel="stylesheet" href="/static/style/reactor.css">
+  <link rel="stylesheet" href="/static/style/clock.css">
+
   <script src="/static/vendors/jquery-3.4.1.min.js"></script>
   <script src="/static/scripts/newtab.js"></script>
+
   <title>Home</title>
+
 </head>
 <body>
 
-  <header>
-    <span id="weather" class="normal-text"></span>
-  </header>
+  {% include 'weather.html' %}
 
-  <footer>
-    {% macro digit() -%}
-      <span class="mdHMS"></span>
-    {%- endmacro -%}
-    <span id="time-date" class="big-text">
-      {{ digit() }}{{ digit() }}/{{ digit() }}{{ digit() }} <span id="time-day"></span>
-    </span>
-    <span id="time-time" class="enormous-text">
-      {{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}
-    </span>
-    <span id="location-room" class="big-text"></span>
-    <span id="location-activity" class="normal-text"></span>
-  </footer>
+  {% include 'reactor.html' %}
+
+  {% include 'clock.html' %}
 
 </body>
 </html>
