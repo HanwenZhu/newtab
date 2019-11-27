@@ -7,8 +7,8 @@ import requests
 
 # A very good API
 URL = 'http://wttr.in/?format=%22%t+%c%22'
-# r'..' since a unicode emoji takes up two bytes
-WTTR_IN_RE = re.compile(r'"(\+|-)[0-9]+°C .."\n')
+# r'..?' since a unicode emoji might take up to two bytes
+WTTR_IN_RE = re.compile(r'"(\+|-)[0-9]+°C ..?"\n')
 REFRESH_RATE = 1800
 
 
