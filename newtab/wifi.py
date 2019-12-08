@@ -15,7 +15,7 @@ import newtab
 def google_connectivity(timeout=5):
     try:
         response = requests.head('http://google.com', timeout=timeout)
-    except requests.ConnectionError:
+    except requests.RequestException:
         return False
     else:
         return response.elapsed.total_seconds()
@@ -24,7 +24,7 @@ def google_connectivity(timeout=5):
 def baidu_connectivity(timeout=5):
     try:
         response = requests.head('http://baidu.com', timeout=timeout)
-    except requests.ConnectionError:
+    except requests.RequestException:
         return False
     else:
         return response.elapsed.total_seconds()
@@ -72,7 +72,11 @@ def login():
         'rc4Key': rckey,
         'rememberPwd': '1'
     }
-    response = requests.post('http://1.1.1.3/ac_portal/login.php', data=params)
+    try:
+        response = requests.post('http://1.1.1.3/ac_portal/login.php',
+                                 data=params)
+    except requests.RequestException:
+        return False
     response.encoding = 'utf-8'
     status = json.loads(response.text.replace("'", '"'))
     logged_in = '用户已在线，不需要再次认证'

@@ -7,6 +7,7 @@ var tick = 0;
 
 // For long-period checks
 var lastWeatherCheck = 0;
+var lastWifiCheck = 0;
 
 // To avoid DOM lookup
 var $timeToday, $timeDay, $locationRoom, $locationActivity, $mdHMS,
@@ -49,6 +50,20 @@ function updateWeather() {
 }
 
 
+function updateWifi() {
+    // TODO: display
+    $.getJSON('/wifi/wifi').done(response => {
+        if (response === 'STUWIRELESS' || response === 'SJWIRELESS') {
+            $.getJSON('/wifi/login').done(response => {
+                if (response) {
+                    console.log('Logged in: ', response);
+                }
+            });
+        }
+    });
+}
+
+
 function update() {
     if (tick % 1 == 0) {
         updateClock();
@@ -59,6 +74,10 @@ function update() {
     if (now - lastWeatherCheck > 1800000) {
         updateWeather();
         lastWeatherCheck = now;
+    }
+    if (now - lastWifiCheck > 1800000) {
+        updateWifi();
+        lastWifiCheck = now;
     }
 }
 
