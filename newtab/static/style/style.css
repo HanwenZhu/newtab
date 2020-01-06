@@ -1,11 +1,11 @@
 @font-face {
     font-family: CMU;
-    src: url('/static/fonts/cmunrm.otf');
+    src: url(/static/fonts/cmunrm.otf);
 }
 
 body {
     margin: 0;
-    background-color: #eeeeee;
+    background: #eeeeee;
     font-family: CMU, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
