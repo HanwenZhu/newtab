@@ -10,19 +10,22 @@ var lastWeatherCheck = 0;
 var lastWifiCheck = 0;
 
 // To avoid DOM lookup
-var $timeToday, $timeDay, $locationRoom, $locationActivity, $mdHMS,
-    $weather;
+var $timeDate, $timeTime;
+var $timeToday, $timeDay, $locationRoom, $locationActivity;
+var $weather;
 
 
 function setup() {
     // Disable cache
     $.ajaxSetup({cache: false});
 
+    $timeDate = $('#time-date');
+    $timeTime = $('#time-time');
+
     $timeToday = $('#time-today');
     $timeDay = $('#time-day');
     $locationRoom = $('#location-room');
     $locationActivity = $('#location-activity');
-    $mdHMS = $('.mdHMS');
 
     $weather = $('#weather');
 
@@ -31,14 +34,21 @@ function setup() {
 
 
 function updateClock() {
-    $.getJSON('/clock').done(response => {
+    // Mon Jan 1
+    $.getJSON('/clock/strftime/%a%20%b%20%-d').done(response => {
+        $timeDate.html(response);
+    });
+
+    // 00:00:00
+    $.getJSON('/clock/strftime/%H:%M:%S').done(response => {
+        $timeTime.html(response);
+    });
+
+    $.getJSON('/clock/school').done(response => {
         $timeToday.html(response.today);
         $timeDay.html(response.day);
         $locationRoom.html(response.room);
         $locationActivity.html(response.activity);
-        $mdHMS.each((index, digit) => {
-            digit.innerHTML = response.mdHMS.charAt(index);
-        });
     });
 }
 

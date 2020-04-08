@@ -1,0 +1,140 @@
+@keyframes station-turn {
+    from {
+        transform: rotateX(-66deg) rotateY(-21deg) rotateZ(-70deg);
+    }
+    to {
+        transform: rotateX(-66deg) rotateY(-21deg) rotateZ(290deg);
+    }
+}
+
+body {
+    color: white;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.abs-center {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.station-container {
+    perspective: 200vh;
+    overflow: hidden;
+}
+
+.space {
+    background: black;
+}
+
+.earth {
+    position: absolute;
+    top: -187vh;
+    left: -257vh;
+    width: 320vh;
+    height: 320vh;
+    background: blue;
+}
+
+.moon {
+    position: absolute;
+    right: 42vh;
+    bottom: 22vh;
+    width: 9vh;
+    height: 9vh;
+    background: linear-gradient(70deg, hsl(213, 8%, 48%), hsl(213, 8%, 48%) 45%, hsl(213, 4%, 70%) 55%);
+                /*radial-gradient(ellipse, hsl(213, 8%, 48%), transparent);*/
+    box-shadow: inset .75vh -.5vh 1vh 0 hsla(33, 100%, 50%, 0.35);
+}
+
+.station {
+    position: absolute;
+    top: -46vh;
+    right: -13vh;
+    width: 140vh;
+    height: 140vh;
+    animation: station-turn 90s linear infinite;
+    transform-style: preserve-3d;
+    /* transition: transform 1s ease; /* TODO: delete; this is for debugging */
+}
+
+.cellar {
+    position: absolute;
+    top: 0;
+    /* Sticks into the rings */
+    right: -1vh;
+    bottom: 0;
+    left: 50%;
+    height: 10vh;
+    margin: auto;
+    transform-origin: left;
+    background: grey;
+}
+
+.cellar-right {
+    transform: rotate(0deg);
+}
+
+.cellar-top {
+    transform: rotate(-90deg);
+}
+
+.cellar-left {
+    transform: rotate(180deg);
+}
+
+.cellar-bottom {
+    transform: rotate(90deg);
+}
+
+.cellar-right-back {
+    transform: rotate(0deg) translateZ(-40vh);
+}
+
+.cellar-top-back {
+    transform: rotate(90deg) translateZ(-40vh);
+}
+
+.cellar-left-back {
+    transform: rotate(180deg) translateZ(-40vh);
+}
+
+.cellar-bottom-back {
+    transform: rotate(270deg) translateZ(-40vh);
+}
+
+.ring {
+    position: absolute;
+    top: -18vh;
+    right: -18vh;
+    bottom: -18vh;
+    left: -18vh;
+    border: 18vh grey solid;
+}
+
+.back {
+    transform: translateZ(-40vh);
+}
+
+.front {
+    transform: translateZ(8.5vh);
+}
+
+.platform {
+    width: 30vh;
+    height: 30vh;
+    background: grey;
+}
+
+.dock {
+    width: 26vh;
+    height: 6vh;
+    border-radius: 2vh;
+    background: yellow;
+}

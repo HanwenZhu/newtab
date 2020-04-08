@@ -7,23 +7,24 @@
   <link rel="preload" href="/static/fonts/cmunrm.otf" as="font" type="font/otf" crossorigin>
 
   <link rel="stylesheet" href="/static/style/style.css">
+  <link rel="stylesheet" href="/static/style/{{ theme }}.css">
   <link rel="stylesheet" href="/static/style/weather.css">
-  <link rel="stylesheet" href="/static/style/reactor.css">
   <link rel="stylesheet" href="/static/style/clock.css">
 
   <script src="/static/vendors/jquery-3.4.1.min.js"></script>
   <script src="/static/scripts/newtab.js"></script>
+  <script src="/static/scripts/{{ theme }}.js"></script>
 
   <title>Home</title>
 
 </head>
 <body>
 
-  {% include 'weather.html' %}
+  {%- include theme ~ '.html' -%}
 
-  {% include 'reactor.html' %}
+  {%- include 'weather.html' -%}
 
-  {% include 'clock.html' %}
+  {%- include 'clock.html' -%}
 
 </body>
 </html>

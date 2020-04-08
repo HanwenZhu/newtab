@@ -1,13 +1,6 @@
 <footer>
-  {% macro digit() -%}
-    <span class="mdHMS"><span style="visibility: hidden;">1</span></span>
-  {%- endmacro -%}
-  <span id="time-date" class="big-text">
-    {{ digit() }}{{ digit() }}/{{ digit() }}{{ digit() }} <span id="time-day"></span>
-  </span>
-  <span id="time-time" class="enormous-text">
-    {{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}:{{ digit() }}{{ digit() }}
-  </span>
+  <span id="time-date" class="big-text"></span>
+  <span id="time-time" class="enormous-text"></span>
   <span id="location-room" class="big-text"></span>
   <span id="location-activity" class="normal-text"></span>
 </footer>

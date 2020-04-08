@@ -1,53 +1,70 @@
-from flask import jsonify, render_template
+from flask import jsonify, safe_join, redirect, url_for, render_template
 
 import newtab
+from newtab import app
 
 
-@newtab.app.route('/')
+@app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', theme=app.config.get('THEME'))
 
 
-@newtab.app.route('/clock')
-def clock():
-    return jsonify(newtab.clock.status())
+@app.route('/theme')
+def get_theme():
+    return app.config.get('THEME')
 
 
-@newtab.app.route('/weather')
+@app.route('/theme/<theme>')
+def set_theme(theme):
+    app.config.update(THEME=safe_join('', theme))
+    return redirect(url_for('index'))
+
+
+@app.route('/clock/strftime/<directive>')
+def clock_strftime(directive):
+    return jsonify(newtab.clock.strftime(directive))
+
+
+@app.route('/clock/school')
+def clock_school():
+    return jsonify(newtab.clock.school())
+
+
+@app.route('/weather')
 def weather():
     return jsonify(newtab.weather.status())
 
 
-@newtab.app.route('/wifi/wifi')
+@app.route('/wifi/wifi')
 def wifi_wifi():
     return jsonify(newtab.wifi.wifi())
 
 
-@newtab.app.route('/wifi/ip')
+@app.route('/wifi/ip')
 def wifi_ip():
     return jsonify(newtab.wifi.ip())
 
 
-@newtab.app.route('/wifi/hostname')
+@app.route('/wifi/hostname')
 def wifi_hostname():
     return jsonify(newtab.wifi.hostname())
 
 
-@newtab.app.route('/wifi/mac')
+@app.route('/wifi/mac')
 def wifi_mac():
     return jsonify(newtab.wifi.mac())
 
 
-@newtab.app.route('/wifi/google')
+@app.route('/wifi/google')
 def wifi_google():
     return jsonify(newtab.wifi.google_connectivity())
 
 
-@newtab.app.route('/wifi/baidu')
+@app.route('/wifi/baidu')
 def wifi_baidu():
     return jsonify(newtab.wifi.baidu_connectivity())
 
 
-@newtab.app.route('/wifi/login')
+@app.route('/wifi/login')
 def wifi_login():
     return jsonify(newtab.wifi.login())

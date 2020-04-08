@@ -1,12 +1,43 @@
 @font-face {
     font-family: CMU;
-    src: url(/static/fonts/cmunrm.otf);
+    src: url(/static/fonts/cmunrm.ttf);
+}
+
+@font-face {
+    font-family: CMU Bright;
+    src: url(/static/fonts/cmunbmr.ttf);
+}
+
+@font-face {
+    font-family: Open Sans Regular;
+    src: url(/static/fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: Optima;
+    src: url(/static/fonts/Optima.ttf);
+}
+
+@font-face {
+    font-family: Futura;
+    src: url(/static/fonts/Futura.ttc);
+}
+
+@font-face {
+    font-family: Futura Book;
+    src: url(/static/fonts/Futura%20Book.otf);
+}
+
+@font-face {
+    font-family: Athena Regular;
+    font-weight: lighter;
+    src: url(/static/fonts/Athena-Regular.ttf);
 }
 
 body {
     margin: 0;
     background: #eeeeee;
-    font-family: CMU, sans-serif;
+    font-family: Futura Book, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
 }

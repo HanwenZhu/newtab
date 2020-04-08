@@ -1,5 +1,5 @@
 class Config:
-    pass
+    THEME = 'reactor'
 
 
 class DevelopmentConfig(Config):

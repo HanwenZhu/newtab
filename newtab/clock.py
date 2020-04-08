@@ -142,10 +142,14 @@ FRIDAY_SCHEDULE = [
 ]
 
 
-def status():
+def strftime(directive):
+    now = datetime.datetime.now(tz=TIMEZONE)
+    return now.strftime(directive)
+
+
+def school():
     now = datetime.datetime.now(tz=TIMEZONE)
     today = DATE_TO_DAY[now.date()]
-    mdHMS = now.strftime('%m%d%H%M%S')
     day = WEEKDAYS[now.weekday()]
 
     if today.startswith('Day '):
@@ -174,7 +178,6 @@ def status():
         activity = today
 
     return {
-        'mdHMS': mdHMS,
         'day': day,
         'room': room,
         'activity': activity,
