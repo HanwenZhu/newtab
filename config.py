@@ -1,5 +1,6 @@
 class Config:
     THEME = 'reactor'
+    THEMES = ['reactor', 'station']
 
 
 class DevelopmentConfig(Config):

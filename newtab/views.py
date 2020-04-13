@@ -1,4 +1,4 @@
-from flask import jsonify, safe_join, redirect, url_for, render_template
+from flask import jsonify, safe_join, redirect, url_for, abort, render_template
 
 import newtab
 from newtab import app
@@ -16,8 +16,11 @@ def get_theme():
 
 @app.route('/theme/<theme>')
 def set_theme(theme):
-    app.config.update(THEME=safe_join('', theme))
-    return redirect(url_for('index'))
+    if theme in app.config.get('THEMES'):
+        app.config.update(THEME=safe_join('', theme))
+        return redirect(url_for('index'))
+    else:
+        abort(400)
 
 
 @app.route('/clock/strftime/<directive>')
