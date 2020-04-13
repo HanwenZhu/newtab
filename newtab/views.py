@@ -17,7 +17,7 @@ def get_theme():
 @app.route('/theme/<theme>')
 def set_theme(theme):
     if theme in app.config.get('THEMES'):
-        app.config.update(THEME=safe_join('', theme))
+        app.config.update(THEME=theme)
         return redirect(url_for('index'))
     else:
         abort(400)
