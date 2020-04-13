@@ -6,14 +6,13 @@ import requests
 
 
 # A very good API
-URL = 'http://wttr.in/?format=%22%t+%c%22'
+URL = 'http://wttr.in/?format=%t+%c'
 # r'..?' since a unicode emoji might take up to two bytes
-WTTR_IN_RE = re.compile(r'"(\+|-)[0-9]+°C ..?"\n')
+WTTR_IN_RE = re.compile(r'(\+|-)[0-9]+°C ..?\n')
 REFRESH_RATE = 1800
 
 
-_status_queue = multiprocessing.SimpleQueue()
-_status_queue.put('')
+_initialized = False
 
 
 def _update_weather():
@@ -28,7 +27,7 @@ def _update_weather():
             _status_queue.get()
             _status_queue.put(
                 # If the temperature starts with a plus sign
-                text.lstrip('"+').rstrip('"\n').replace('C', '')
+                text.lstrip('+').rstrip('\n').replace('C', '')
             )
         return True
 
@@ -41,11 +40,18 @@ def _background_update():
             time.sleep(120)
 
 
+_status_queue = multiprocessing.SimpleQueue()
+_status_queue.put('')
+
 _process = multiprocessing.Process(target=_background_update)
-_process.start()
 
 
 def status(check=True):
+    global _initialized
+    if not _initialized:
+        _process.start()
+        _initialized = True
+
     weather_status = _status_queue.get()
     _status_queue.put(weather_status)
     if not check or weather_status:
