@@ -17,4 +17,4 @@ if os.path.isfile(os.path.join(app.instance_path, 'config.py')):
     app.config.from_pyfile('config.py')
 
 
-import newtab.views  # noqa: E402, F401
+import newtab.views  # noqa: E402,F401
