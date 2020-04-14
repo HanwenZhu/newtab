@@ -36,26 +36,26 @@ function setup() {
 function updateClock() {
     // Mon Jan 1
     $.getJSON('/clock/strftime/%a%20%b%20%-d').done(response => {
-        $timeDate.html(response);
+        $timeDate.text(response);
     });
 
     // 00:00:00
     $.getJSON('/clock/strftime/%H:%M:%S').done(response => {
-        $timeTime.html(response);
+        $timeTime.text(response);
     });
 
     $.getJSON('/clock/school').done(response => {
-        $timeToday.html(response.today);
-        $timeDay.html(response.day);
-        $locationRoom.html(response.room);
-        $locationActivity.html(response.activity);
+        $timeToday.text(response.today);
+        $timeDay.text(response.day);
+        $locationRoom.text(response.room);
+        $locationActivity.text(response.activity);
     });
 }
 
 
 function updateWeather() {
     $.getJSON('/weather').done(response => {
-        $weather.html(response);
+        $weather.text(response);
     });
 }
 

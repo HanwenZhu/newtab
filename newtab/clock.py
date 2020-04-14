@@ -69,8 +69,8 @@ HOLIDAYS = {
 
 # Special events other than holidays
 EVENTS = {
-    datetime.date(2019, 11, 14): 'Parent&ndash;Teacher Conference',
-    datetime.date(2019, 11, 15): 'Parent&ndash;Teacher Conference',
+    datetime.date(2019, 11, 14): 'Parent–Teacher Conference',
+    datetime.date(2019, 11, 15): 'Parent–Teacher Conference',
     datetime.date(2019, 11, 22): 'Wierd Staff Day',
 }
 
@@ -165,7 +165,7 @@ def school():
             class_index = TIMETABLE[today][next_end]
             room, activity = CLASSES[class_index]
             class_time = schedule[next_end]
-            activity = (f'{class_time[0].strftime("%H:%M")}&ndash;'
+            activity = (f'{class_time[0].strftime("%H:%M")}–'
                         f'{class_time[1].strftime("%H:%M")} '
                         f'{activity}')
             next_start = bisect.bisect(start_times, now.time())
