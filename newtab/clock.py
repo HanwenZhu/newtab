@@ -3,10 +3,9 @@ import datetime
 
 
 # TODO, this is only 2019-2020
-# TODO, worry about timezones
 # TODO, what if school on weekends
 
-TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
+SCHOOL_TIMEZONE = datetime.timezone(datetime.timedelta(hours=8))
 
 # Holidays
 HOLIDAYS = {
@@ -143,12 +142,12 @@ FRIDAY_SCHEDULE = [
 
 
 def strftime(directive):
-    now = datetime.datetime.now(tz=TIMEZONE)
+    now = datetime.datetime.now()
     return now.strftime(directive)
 
 
 def school():
-    now = datetime.datetime.now(tz=TIMEZONE)
+    now = datetime.datetime.now(tz=SCHOOL_TIMEZONE)
     today = DATE_TO_DAY[now.date()]
     day = WEEKDAYS[now.weekday()]
 
