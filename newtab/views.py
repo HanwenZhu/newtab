@@ -1,4 +1,4 @@
-from flask import jsonify, safe_join, redirect, url_for, abort, render_template
+from flask import jsonify, redirect, url_for, abort, render_template
 
 import newtab
 from newtab import app
