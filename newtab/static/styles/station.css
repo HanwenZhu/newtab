@@ -1,9 +1,9 @@
 @keyframes station-turn {
     from {
-        transform: rotateX(-66deg) rotateY(-21deg) rotateZ(-70deg);
+        transform: rotateX(-66deg) rotateY(-21deg) rotateZ(-60deg);
     }
     to {
-        transform: rotateX(-66deg) rotateY(-21deg) rotateZ(290deg);
+        transform: rotateX(-66deg) rotateY(-21deg) rotateZ(300deg);
     }
 }
 
@@ -24,8 +24,12 @@ body {
     margin: auto;
 }
 
+.cylinder {
+    transform-style: preserve-3d;
+}
+
 .station-container {
-    perspective: 200vh;
+    perspective: 170vh;
     overflow: hidden;
 }
 
@@ -60,53 +64,53 @@ body {
     width: 140vh;
     height: 140vh;
     animation: station-turn 90s linear infinite;
+    /*transform: rotateX(-66deg) rotateY(-21deg) rotateZ(-60deg);*/
     transform-style: preserve-3d;
-    /* transition: transform 1s ease; /* TODO: delete; this is for debugging */
 }
 
 .cellar {
     position: absolute;
-    top: 0;
+    top: 50%;
+    right: 0;
     /* Sticks into the rings */
-    right: -1vh;
-    bottom: 0;
-    left: 50%;
-    height: 10vh;
+    bottom: -1vh;
+    left: 0;
+    width: 10vh;
     margin: auto;
-    transform-origin: left;
-    background: grey;
-}
-
-.cellar-right {
-    transform: rotate(0deg);
-}
-
-.cellar-top {
-    transform: rotate(-90deg);
-}
-
-.cellar-left {
-    transform: rotate(180deg);
+    transform-origin: top;
+    /*background: grey;*/
 }
 
 .cellar-bottom {
+    transform: rotate(0deg);
+}
+
+.cellar-right {
+    transform: rotate(-90deg);
+}
+
+.cellar-top {
+    transform: rotate(180deg);
+}
+
+.cellar-left {
     transform: rotate(90deg);
 }
 
 .cellar-right-back {
-    transform: rotate(0deg) translateZ(-40vh);
+    transform: rotate(0deg) translateZ(-45vh);
 }
 
 .cellar-top-back {
-    transform: rotate(90deg) translateZ(-40vh);
+    transform: rotate(90deg) translateZ(-45vh);
 }
 
 .cellar-left-back {
-    transform: rotate(180deg) translateZ(-40vh);
+    transform: rotate(180deg) translateZ(-45vh);
 }
 
 .cellar-bottom-back {
-    transform: rotate(270deg) translateZ(-40vh);
+    transform: rotate(270deg) translateZ(-45vh);
 }
 
 .ring {
@@ -119,7 +123,7 @@ body {
 }
 
 .back {
-    transform: translateZ(-40vh);
+    transform: translateZ(-45vh);
 }
 
 .front {
@@ -137,4 +141,18 @@ body {
     height: 6vh;
     border-radius: 2vh;
     background: yellow;
+}
+
+.passage {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto auto auto;
+    width: 10vh;
+    height: 40vh;
+    transform-origin: top;
+    transform: rotateX(-90deg);
+    transition: transform 1s ease;
 }
