@@ -10,14 +10,29 @@
     left: 20px;
 }
 
-#location-room {
-    position: absolute;
-    right: 20px;
-    bottom: 45px;
+#school-today {
+    display: table;
+    margin-left: auto;
+    /*margin-right: 5px;*/
 }
 
-#location-activity {
+#school {
     position: absolute;
     right: 20px;
     bottom: 15px;
+}
+
+.school-class {
+    text-align: right;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.school-recess {
+    display: block;
+    width: 100%;
+    height: 2px;
+    margin: 4px 0;
 }

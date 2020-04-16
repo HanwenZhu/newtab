@@ -74,52 +74,46 @@ EVENTS = {
     datetime.date(2019, 11, 22): 'Wierd Staff Day',
 }
 
-DATE_TO_DAY = {}
+DATE_TO_STRING = {}
+DATE_IS_SCHOOL = {}
 _last_school_day = -1
 for _date_ordinal in range(datetime.date(2019, 8, 26).toordinal(),
                            datetime.date(2020, 6, 19).toordinal()):
     _date = datetime.date.fromordinal(_date_ordinal)
     _special = HOLIDAYS.get(_date, '') or EVENTS.get(_date, '')
     if _special:
-        DATE_TO_DAY[_date] = _special
+        DATE_TO_STRING[_date] = _special
+        DATE_IS_SCHOOL[_date] = False
     elif _date.weekday() in {5, 6}:
-        DATE_TO_DAY[_date] = 'Weekend'
+        DATE_TO_STRING[_date] = 'Weekend'
+        DATE_IS_SCHOOL[_date] = False
     else:
         _last_school_day += 1
         _last_school_day %= 6
         _day = ['A', 'B', 'C', 'D', 'E', 'F'][_last_school_day]
-        DATE_TO_DAY[_date] = 'Day ' + _day
-
-WEEKDAYS = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-]
+        DATE_TO_STRING[_date] = _day
+        DATE_IS_SCHOOL[_date] = True
 
 TIMETABLE = {
-    'Day A': [0, 1, 2, 3, 4, 5],
-    'Day B': [6, 0, 1, 5, 3, 7],
-    'Day C': [6, 5, 0, 3, 8, 4],
-    'Day D': [2, 5, 0, 4, 1, 6],
-    'Day E': [3, 2, 4, 6, 9, 1],
-    'Day F': [4, 5, 0, 1, 6, 3],
+    'A': [0, 1, 2, 3, 4, 5],
+    'B': [6, 0, 1, 5, 3, 7],
+    'C': [6, 5, 0, 3, 8, 4],
+    'D': [2, 5, 0, 4, 1, 6],
+    'E': [3, 2, 4, 6, 9, 1],
+    'F': [4, 5, 0, 1, 6, 3],
 }
 
 CLASSES = [
-    ('S406', 'Computer Science'),
-    ('2301', 'Mathematics'),
-    ('N110', 'Theory of Knowledge'),
-    ('S204', 'Economics'),
-    ('S303', 'Chinese A'),
-    ('N305', 'Physics'),
-    ('N204', 'English A'),
-    ('N403', 'C4C History'),
-    ('N402', 'C4C Politics'),
-    ('2301', 'College Counseling'),
+    'Computer',
+    'Math',
+    'Knowledge',
+    'Economics',
+    'Chinese',
+    'Physics',
+    'English',
+    'History',
+    'Politics',
+    'College',
 ]
 
 WEEKDAY_SCHEDULE = [
@@ -148,36 +142,49 @@ def strftime(directive):
 
 def school():
     now = datetime.datetime.now(tz=SCHOOL_TIMEZONE)
-    today = DATE_TO_DAY[now.date()]
-    day = WEEKDAYS[now.weekday()]
+    date = now.date()
+    today = DATE_TO_STRING[date]
 
-    if today.startswith('Day '):
-        if day == 'Friday':
+    if DATE_IS_SCHOOL[date]:
+        classes = [CLASSES[class_index] for class_index in TIMETABLE[today]]
+
+        if now.weekday() == 4:
             schedule = FRIDAY_SCHEDULE
         else:
             schedule = WEEKDAY_SCHEDULE
         start_times, end_times = list(zip(*schedule))
         next_end = bisect.bisect(end_times, now.time())
-        if next_end == len(end_times):
-            room = ''
-            activity = 'Afterschool'
-        else:
-            class_index = TIMETABLE[today][next_end]
-            room, activity = CLASSES[class_index]
-            class_time = schedule[next_end]
-            activity = (f'{class_time[0].strftime("%H:%M")}–'
-                        f'{class_time[1].strftime("%H:%M")} '
-                        f'{activity}')
-            next_start = bisect.bisect(start_times, now.time())
-            if next_start == next_end:
-                activity = f'Next up: {activity}'
-            activity += f', {today}'
-    else:
-        room = ''
-        activity = today
+        next_start = bisect.bisect(start_times, now.time())
 
-    return {
-        'day': day,
-        'room': room,
-        'activity': activity,
-    }
+        if next_start == next_end == 0:
+            start_time = datetime.time.min
+            end_time = start_times[next_start]
+        elif next_start == next_end == len(schedule):
+            start_time = end_times[next_end - 1]
+            end_time = datetime.time.max
+        elif next_start == next_end:
+            start_time = end_times[next_end - 1]
+            end_time = start_times[next_start]
+        else:
+            start_time = start_times[next_start - 1]
+            end_time = end_times[next_end]
+
+        start = datetime.datetime.combine(now, start_time)
+        end = datetime.datetime.combine(now, end_time)
+        now_naive = now.replace(tzinfo=None)
+        progress = (now_naive - start) / (end - start)
+
+        return {
+            'today': today,
+            'school': True,
+            'classes': classes,
+            'classIndex': next_end,
+            'started': next_start != next_end,
+            'progress': progress,
+        }
+
+    else:
+        return {
+            'today': today,
+            'school': False
+        }

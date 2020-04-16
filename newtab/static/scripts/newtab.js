@@ -11,8 +11,17 @@ var lastWifiCheck = 0;
 
 // To avoid DOM lookup
 var $timeDate, $timeTime;
-var $timeToday, $timeDay, $locationRoom, $locationActivity;
+var $schoolToday, $schoolClasses;
 var $weather;
+
+// Element templates
+// Note that we can't use <span> with display: block or <div> with display: flex
+// for (-webkit-)background-clip: text on Safari
+// This is a documented bug: https://bugs.webkit.org/show_bug.cgi?id=169125
+var $schoolClass = $('<div></div>').addClass('school-class');
+var $schoolRecess = $('<span></span>').addClass('school-recess');
+var finishedColor = 'hsla(0, 0%, 0%, 0.5)';
+var unfinishedColor = 'black';
 
 
 function setup() {
@@ -22,10 +31,8 @@ function setup() {
     $timeDate = $('#time-date');
     $timeTime = $('#time-time');
 
-    $timeToday = $('#time-today');
-    $timeDay = $('#time-day');
-    $locationRoom = $('#location-room');
-    $locationActivity = $('#location-activity');
+    $schoolToday = $('#school-today');
+    $schoolClasses = $('#school-classes');
 
     $weather = $('#weather');
 
@@ -45,10 +52,38 @@ function updateClock() {
     });
 
     $.getJSON('/clock/school').done(response => {
-        $timeToday.text(response.today);
-        $timeDay.text(response.day);
-        $locationRoom.text(response.room);
-        $locationActivity.text(response.activity);
+        $schoolToday.text(response.today);
+        if (response.school) {
+            $schoolClasses.empty();
+            var progressPercent = response.progress * 100;
+            var backgroundImage = `linear-gradient(to right, ${finishedColor} 0%, ${finishedColor} ${progressPercent}%, ${unfinishedColor} ${progressPercent}%)`;
+            response.classes.forEach((className, index) => {
+                var $thisClass = $schoolClass.clone().text(className);
+
+                if (index === response.classIndex && !response.started) {
+                    $schoolRecess.clone().css({
+                        backgroundImage: backgroundImage
+                    }).appendTo($schoolClasses);
+                    $thisClass.css({
+                        backgroundColor: unfinishedColor
+                    });
+                } else if (index === response.classIndex && response.started) {
+                    $thisClass.css({
+                        backgroundImage: backgroundImage
+                    });
+                } else if (index < response.classIndex) {
+                    $thisClass.css({
+                        backgroundColor: finishedColor
+                    });
+                } else if (index > response.classIndex) {
+                    $thisClass.css({
+                        backgroundColor: unfinishedColor
+                    });
+                }
+
+                $thisClass.appendTo($schoolClasses);
+            });
+        }
     });
 }
 
