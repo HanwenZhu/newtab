@@ -20,8 +20,8 @@ var $weather;
 // This is a documented bug: https://bugs.webkit.org/show_bug.cgi?id=169125
 var $schoolClass = $('<div></div>').addClass('school-class');
 var $schoolRecess = $('<span></span>').addClass('school-recess');
-var finishedColor = 'hsla(0, 0%, 0%, 0.5)';
-var unfinishedColor = 'black';
+var unfinishedColor;
+var finishedColor;
 
 
 function setup() {
@@ -35,6 +35,9 @@ function setup() {
     $schoolClasses = $('#school-classes');
 
     $weather = $('#weather');
+
+    unfinishedColor = $('body').css('color');
+    finishedColor = unfinishedColor.replace(')', ', 0.5)').replace('rgb', 'rgba');
 
     update();
 }
