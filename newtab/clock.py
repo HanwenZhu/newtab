@@ -116,13 +116,23 @@ CLASSES = [
     'College',
 ]
 
+# WEEKDAY_SCHEDULE = [
+#     (datetime.time(8, 0), datetime.time(9, 0)),
+#     (datetime.time(9, 5), datetime.time(10, 5)),
+#     (datetime.time(10, 20), datetime.time(11, 20)),
+#     (datetime.time(11, 25), datetime.time(12, 25)),
+#     (datetime.time(13, 40), datetime.time(14, 40)),
+#     (datetime.time(14, 45), datetime.time(15, 45)),
+# ]
+
+# I hate the coronavirus
 WEEKDAY_SCHEDULE = [
-    (datetime.time(8, 0), datetime.time(9, 0)),
-    (datetime.time(9, 5), datetime.time(10, 5)),
-    (datetime.time(10, 20), datetime.time(11, 20)),
-    (datetime.time(11, 25), datetime.time(12, 25)),
-    (datetime.time(13, 40), datetime.time(14, 40)),
-    (datetime.time(14, 45), datetime.time(15, 45)),
+    (datetime.time(8, 0), datetime.time(8, 55)),
+    (datetime.time(9, 0), datetime.time(9, 55)),
+    (datetime.time(10, 10), datetime.time(11, 5)),
+    (datetime.time(11, 10), datetime.time(12, 5)),
+    (datetime.time(13, 35), datetime.time(14, 30)),
+    (datetime.time(14, 45), datetime.time(15, 40)),
 ]
 
 FRIDAY_SCHEDULE = [
