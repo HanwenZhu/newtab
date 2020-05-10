@@ -7,8 +7,9 @@ import sys
 import time
 import uuid
 
-import flask
 import requests
+
+import newtab
 
 
 def google_connectivity(timeout=5):
@@ -53,8 +54,7 @@ def wifi():
 
 
 def login():
-    creds_filename = os.path.join(flask.current_app.instance_path,
-                                  'wifi-creds.json')
+    creds_filename = os.path.join(newtab.app.instance_path, 'wifi-creds.json')
     if not os.path.isfile(creds_filename):
         return False
     if wifi() not in {'SJWIRELESS', 'STUWIRELESS'}:

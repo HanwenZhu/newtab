@@ -4,6 +4,8 @@ import time
 
 import requests
 
+import newtab
+
 
 # A very good API
 URL = 'http://wttr.in/?format=%t+%c'
@@ -18,18 +20,24 @@ _initialized = False
 def _update_weather():
     try:
         response = requests.get(URL, allow_redirects=False, timeout=10)
-    except requests.exceptions.RequestException:
+    except requests.exceptions.RequestException as error:
+        newtab.app.logger.warn(f'Could not update weather: {error}')
         return False
     else:
         response.encoding = 'utf-8'
         text = response.text
         if response.status_code == 200 and WTTR_IN_RE.fullmatch(text):
+            # If the temperature starts with a plus sign
+            weather_status = text.lstrip('+').rstrip('\n').replace('C', '')
             _status_queue.get()
-            _status_queue.put(
-                # If the temperature starts with a plus sign
-                text.lstrip('+').rstrip('\n').replace('C', '')
-            )
-        return True
+            _status_queue.put(weather_status)
+            newtab.app.logger.info(f'Weather status: {weather_status}')
+            return True
+        else:
+            newtab.app.logger.warn('Could not update weather: '
+                                   f'wttr.in returned {response}: '
+                                   f'{response.text}')
+            return False
 
 
 def _background_update():
