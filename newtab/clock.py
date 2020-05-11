@@ -132,7 +132,7 @@ WEEKDAY_SCHEDULE = [
     (datetime.time(10, 10), datetime.time(11, 5)),
     (datetime.time(11, 10), datetime.time(12, 5)),
     (datetime.time(13, 35), datetime.time(14, 30)),
-    (datetime.time(14, 35), datetime.time(15, 30)),
+    (datetime.time(14, 45), datetime.time(15, 40)),
 ]
 
 FRIDAY_SCHEDULE = [
