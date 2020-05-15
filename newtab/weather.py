@@ -7,10 +7,13 @@ import requests
 import newtab
 
 
+# TODO: don't use queue; just use a variable
+
+
 # A very good API
 URL = 'http://wttr.in/?format=%t+%c'
 # r'..?' since a unicode emoji might take up to two bytes
-WTTR_IN_RE = re.compile(r'(\+|-)[0-9]+°C ..?\n')
+WTTR_IN_RE = re.compile(r'(\+|-)[0-9]+°C ..?\s*')
 REFRESH_RATE = 1800
 
 
@@ -28,7 +31,7 @@ def _update_weather():
         text = response.text
         if response.status_code == 200 and WTTR_IN_RE.fullmatch(text):
             # If the temperature starts with a plus sign
-            weather_status = text.lstrip('+').rstrip('\n').replace('C', '')
+            weather_status = text.lstrip('+').rstrip().replace('C', '')
             _status_queue.get()
             _status_queue.put(weather_status)
             newtab.app.logger.info(f'Weather status: {weather_status}')
