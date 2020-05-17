@@ -1,5 +1,5 @@
-import multiprocessing
 import re
+import threading
 import time
 
 import requests
@@ -21,6 +21,7 @@ _initialized = False
 
 
 def _update_weather():
+    global _weather_status
     try:
         response = requests.get(URL, allow_redirects=False, timeout=10)
     except requests.exceptions.RequestException as error:
@@ -31,10 +32,8 @@ def _update_weather():
         text = response.text
         if response.status_code == 200 and WTTR_IN_RE.fullmatch(text):
             # If the temperature starts with a plus sign
-            weather_status = text.lstrip('+').rstrip().replace('C', '')
-            _status_queue.get()
-            _status_queue.put(weather_status)
-            newtab.app.logger.info(f'Weather status: {weather_status}')
+            _weather_status = text.lstrip('+').rstrip().replace('C', '')
+            newtab.app.logger.info(f'Weather status: {_weather_status}')
             return True
         else:
             newtab.app.logger.warn('Could not update weather: '
@@ -51,10 +50,8 @@ def _background_update():
             time.sleep(120)
 
 
-_status_queue = multiprocessing.SimpleQueue()
-_status_queue.put('')
-
-_process = multiprocessing.Process(target=_background_update)
+_weather_status = ''
+_process = threading.Thread(target=_background_update)
 
 
 def status(check=True):
@@ -63,10 +60,8 @@ def status(check=True):
         _process.start()
         _initialized = True
 
-    weather_status = _status_queue.get()
-    _status_queue.put(weather_status)
-    if not check or weather_status:
-        return weather_status
+    if not check or _weather_status:
+        return _weather_status
     else:
         _update_weather()
         return status(check=False)
