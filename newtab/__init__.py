@@ -13,7 +13,7 @@ if os.path.isfile(os.path.join(app.instance_path, 'config.py')):
     app.config.from_pyfile('config.py')
 
 
-import newtab.clock
-import newtab.weather
-import newtab.wifi
+import newtab.clock  # noqa: E402
+import newtab.weather  # noqa: E402
+import newtab.wifi  # noqa: E402
 import newtab.views  # noqa: E402,F401
