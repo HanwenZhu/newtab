@@ -1,0 +1,5 @@
+{
+    "ssid": "WiFi SSID",
+    "username": "username",
+    "password": "base-64 encoded password"
+}
