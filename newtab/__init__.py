@@ -2,10 +2,6 @@ import os
 
 from flask import Flask
 
-import newtab.clock
-import newtab.weather
-import newtab.wifi
-
 
 app = Flask(__name__, instance_relative_config=True)
 
@@ -17,4 +13,7 @@ if os.path.isfile(os.path.join(app.instance_path, 'config.py')):
     app.config.from_pyfile('config.py')
 
 
+import newtab.clock
+import newtab.weather
+import newtab.wifi
 import newtab.views  # noqa: E402,F401

@@ -12,6 +12,19 @@ import requests
 import newtab
 
 
+_config_file = os.path.join(newtab.app.instance_path, 'wifi.json')
+if not os.path.isfile(_config_file):
+    raise FileNotFoundError('instance/wifi.json not found')
+
+with open(_config_file) as _file:
+    _config = json.load(_file)
+
+_user_config_file = os.path.join(newtab.app.instance_path, 'wifi-user.json')
+if os.path.isfile(_user_config_file):
+    with open(_user_config_file) as _file:
+        _config.update(json.load(_file))
+
+
 def google_connectivity(timeout=5):
     try:
         response = requests.head('http://google.com', timeout=timeout)
@@ -45,7 +58,7 @@ def mac():
 
 def wifi():
     if sys.platform != 'darwin':
-        return False  # TODO
+        return _config['ssid']  # TODO
     commands = ['networksetup', '-getairportnetwork', 'en0']
     output = subprocess.check_output(commands, shell=False).decode()
     if output.startswith('You are not associated with an AirPort network.\n'):
@@ -54,33 +67,29 @@ def wifi():
 
 
 def login():
-    creds_filename = os.path.join(newtab.app.instance_path, 'wifi-creds.json')
-    if not os.path.isfile(creds_filename):
-        return False
-    if wifi() not in {'SJWIRELESS', 'STUWIRELESS'}:
+    if wifi() != _config['ssid']:
         return False
 
-    with open(creds_filename) as file:
-        credentials = json.load(file)
-    password = base64.b64decode(credentials['password']).decode()
+    password = base64.b64decode(_config['password']).decode()
     rckey = str(int(time.time() * 1000))
     pwd = _do_encrypt_rc4(password, rckey)
     params = {
         'opr': 'pwdLogin',
-        'userName': credentials['username'],
+        'userName': _config['username'],
         'pwd': pwd,
         'rc4Key': rckey,
         'rememberPwd': '1'
     }
+
     try:
-        response = requests.post('http://1.1.1.3/ac_portal/login.php',
-                                 data=params)
+        response = requests.post(_config['login_url'], data=params)
     except requests.RequestException:
         return False
+
     response.encoding = 'utf-8'
     status = json.loads(response.text.replace("'", '"'))
-    logged_in = '用户已在线，不需要再次认证'
-    return status.get('success') or status.get('msg') == logged_in
+    logged_in = status.get('msg') == _config['logged_in_message']
+    return status.get('success') or logged_in
 
 
 def _do_encrypt_rc4(source, raw_key):

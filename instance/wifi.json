@@ -1,5 +1,7 @@
 {
     "ssid": "WiFi SSID",
+    "login_url": "http://1.1.1.3/ac_portal/login.php",
+    "logged_in_message": "用户已在线，不需要再次认证",
     "username": "username",
     "password": "base-64 encoded password"
 }

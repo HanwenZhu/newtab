@@ -26,3 +26,10 @@ python3 run.py
 and go to [`http://localhost:5050`](http://localhost:5050) in the browser.
 
 The `app` is located at `newtab:app`. Specify port using `python3 run.py <port>`.
+
+# Customization
+## WiFi login
+WiFi login credentials and URL can be customized in `instance/wifi-user.json`.
+
+## Timetable
+The timetable can be customized in `instance/clock-user.json`. Set `rotation` to `false` and put timetables starting from Monday into `timetable` to use a fixed schedule.
