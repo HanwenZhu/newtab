@@ -99,7 +99,10 @@ for _date_ordinal in range(_start_date.toordinal(), _end_date.toordinal()):
 
 def strftime(directive):
     now = datetime.datetime.now()
-    return now.strftime(directive)
+    try:
+        return now.strftime(directive)
+    except ValueError:
+        return now.strftime(directive.replace('%-', '%#'))
 
 
 def school():
