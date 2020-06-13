@@ -7,7 +7,7 @@ Either
 1. Download ZIP and decompress; or
 2.
 ```sh
-git clone https://github.com/HanwenZhu/newtab.git
+git clone https://github.com/hanwenzhu/newtab.git
 cd newtab
 ```
 
