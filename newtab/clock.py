@@ -35,12 +35,12 @@ _config_file = os.path.join(newtab.app.instance_path, 'clock.json')
 if not os.path.isfile(_config_file):
     raise FileNotFoundError('instance/clock.json not found')
 
-with open(_config_file) as _file:
+with open(_config_file, encoding='utf-8') as _file:
     _config = json.load(_file)
 
 _user_config_file = os.path.join(newtab.app.instance_path, 'clock-user.json')
 if os.path.isfile(_user_config_file):
-    with open(_user_config_file) as _file:
+    with open(_user_config_file, encoding='utf-8') as _file:
         _config.update(json.load(_file))
 
 
