@@ -108,7 +108,13 @@ def strftime(directive):
 def school():
     now = datetime.datetime.now(tz=_school_timezone)
     date = now.date()
-    today = _dates[date]
+    today = _dates.get(date)
+
+    if today is None:
+        return {
+            'today': 'Break',
+            'school': False
+        }
 
     if today.is_school:
         classes = [_classes[class_index]
@@ -146,7 +152,7 @@ def school():
             'classes': classes,
             'classIndex': next_end,
             'started': next_start != next_end,
-            'progress': progress,
+            'progress': progress
         }
 
     else:
