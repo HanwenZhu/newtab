@@ -11,7 +11,7 @@ import newtab
 
 
 # A very good API
-URL = 'http://wttr.in/?format=%t+%c'
+URL = 'http://wttr.in/?m&format=%t+%c'
 # r'..?' since a unicode emoji might take up to two bytes
 WTTR_IN_RE = re.compile(r'(\+|-)[0-9]+°C ..?\s*')
 REFRESH_RATE = 1800
