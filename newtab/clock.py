@@ -116,7 +116,7 @@ def school():
             'school': False
         }
 
-    if today.is_school:
+    elif today.is_school:
         classes = [_classes[class_index]
                    for class_index in _timetable[today.timetable_index]]
 
