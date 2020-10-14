@@ -7,9 +7,6 @@ import requests
 import newtab
 
 
-# TODO: don't use queue; just use a variable
-
-
 # A very good API
 URL = 'http://wttr.in/?m&format=%t+%c'
 # r'..?' since a unicode emoji might take up to two bytes

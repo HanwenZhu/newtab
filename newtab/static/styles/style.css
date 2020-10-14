@@ -3,10 +3,16 @@
     src: url(/static/fonts/Futura-Book.woff2);
 }
 
+@font-face {
+    font-family: Symbola;
+    src: url(/static/fonts/Symbola.woff2);
+    vertical-align: text-bottom;
+}
+
 body {
     margin: 0;
     background: #eeeeee;
-    font-family: Futura Book, sans-serif;
+    font-family: Futura Book, Symbola, sans-serif;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
 }

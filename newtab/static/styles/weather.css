@@ -3,3 +3,11 @@
     top: 12px;
     right: 15px;
 }
+
+#weather-temperature {
+    vertical-align: bottom;
+}
+
+#weather-emoji {
+    vertical-align: text-bottom;
+}

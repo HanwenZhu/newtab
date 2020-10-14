@@ -12,7 +12,7 @@ var lastWifiCheck = 0;
 // To avoid DOM lookup
 var $timeDate, $timeTime;
 var $schoolToday, $schoolClasses;
-var $weather;
+var $weatherTemperature, $weatherEmoji;
 
 // Element templates
 // Note that we can't use <span> with display: block or <div> with display: flex
@@ -34,7 +34,8 @@ function setup() {
     $schoolToday = $('#school-today');
     $schoolClasses = $('#school-classes');
 
-    $weather = $('#weather');
+    $weatherTemperature = $('#weather-temperature');
+    $weatherEmoji = $('#weather-emoji');
 
     unfinishedColor = $('body').css('color');
     finishedColor = unfinishedColor.replace(')', ', 0.5)').replace('rgb', 'rgba');
@@ -93,7 +94,9 @@ function updateClock() {
 
 function updateWeather() {
     $.getJSON('/weather').done(response => {
-        $weather.text(response);
+        [temperature, emoji] = response.split(' ');
+        $weatherTemperature.text(temperature);
+        $weatherEmoji.text(emoji);
     });
 }
 
